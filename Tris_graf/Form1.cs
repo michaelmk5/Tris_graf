@@ -6,6 +6,7 @@ namespace Tris_graf
         int match;
         string[] segni;
         int match_const;
+        //Tris vs PC
         public TRIS(int partite)
         {
             InitializeComponent();
@@ -17,14 +18,19 @@ namespace Tris_graf
         }
         int turno = 0, click = 0;
         string ris = "";
-       
+
         private string Turno(int turno)
         {
             string giocatore = "";
             if (turno == 0)
-                giocatore = "Player 1";
-            else
-                giocatore = "Player 2";
+            {
+                giocatore = "Player 1";                
+            }                
+            else if (turno == 1)
+            {
+                giocatore = "PC";
+                PartitaPc();
+            }                
             return giocatore;
         }
 
@@ -66,7 +72,7 @@ namespace Tris_graf
                 b.Enabled = true;
             }
             //lb_risultato.Text = "";
-            
+
             return segni;
         }
         private void StampaRisultato(string ris)
@@ -78,7 +84,7 @@ namespace Tris_graf
         }
         private void Pareggio(int click)
         {
-            if(click == 9)
+            if (click == 9)
             {
                 match--;
                 if (match == 0)
@@ -304,14 +310,14 @@ namespace Tris_graf
             click++;
             Pareggio(click);
         }
-        
+
         private void lb_risultato_TextChanged(object sender, EventArgs e)
         {
             if (lb_risultato.Text.Contains("vincitore"))
             {
                 Vinte(segni);
             }
-            
+
             match--;
             if (match == 0)
             {
@@ -323,7 +329,7 @@ namespace Tris_graf
             }
             lb_match.Text = "" + match;
         }
-        
+
         private void lb_vx_TextChanged(object sender, EventArgs e)
         {
             /*
@@ -359,9 +365,39 @@ namespace Tris_graf
             this.Visible = false;
         }
 
-        private void lb_vo_TextChanged(object sender, EventArgs e)
+        private void PartitaPc()
         {
-            
+            //Intelligenza PC
+            int count = 0;
+            Button[] bottoni = new Button[] { btn00, btn01, btn02, btn10, btn11, btn12, btn20, btn21, btn22 };
+            int[,] vincita = { {0,1,2},{3,4,5},{6,7,8},
+            {0,3,6}, {1,4,7}, {2,5,8}, {0,4,8},{2,4,6}};
+            for (int i = 0; i < 8; i++)
+            {
+                for(int j = 0; j < 3; j++)
+                {
+                    if (bottoni[vincita[i, j]].Text == "O")
+                    {
+                        count++;
+                        
+                    }
+                }
+                if (count == 2)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        Console.WriteLine("testo bottone"+bottoni[vincita[i, j]].Text);
+
+                        if ( bottoni[vincita[i, j]].Text != "0" && bottoni[vincita[i, j]].Text != "X")
+                        {
+                            Console.WriteLine("sono qui");
+                            bottoni[vincita[i, j]].Text = "O";
+                        }
+                    }
+                }
+                Console.WriteLine(count);
+                count = 0;
+            }
         }
     }
 }

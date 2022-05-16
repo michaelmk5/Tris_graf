@@ -221,7 +221,6 @@
             this.lb_vo.Size = new System.Drawing.Size(23, 28);
             this.lb_vo.TabIndex = 16;
             this.lb_vo.Text = "0";
-            this.lb_vo.TextChanged += new System.EventHandler(this.lb_vo_TextChanged);
             // 
             // label1
             // 
